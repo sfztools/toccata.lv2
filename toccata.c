@@ -361,7 +361,10 @@ instantiate(const LV2_Descriptor* descriptor,
     full_path = calloc(1, strlen(path) + strlen(TOCCATA_SFZ_PATH) + 1);
     strcpy(full_path, path);
     strcat(full_path, TOCCATA_SFZ_PATH);
-    if (!sfizz_load_file(self->synth, full_path))
+    bool file_loaded = sfizz_load_file(self->synth, full_path);
+    free(full_path);
+
+    if (!file_loaded)
         return NULL;
 
     return (LV2_Handle)self;
