@@ -1,12 +1,12 @@
 /*
-  Batteur LV2 plugin
+  Toccata LV2 plugin
 
   Copyright 2020, Paul Ferrand <paul@ferrand.cc>
 
-  This file was based on skeleton and example code from the LV2 plugin 
+  This file was based on skeleton and example code from the LV2 plugin
   distribution available at http://lv2plug.in/
 
-  The LV2 sample plugins have the following copyright and notice, which are 
+  The LV2 sample plugins have the following copyright and notice, which are
   extended to the current work:
   Copyright 2011-2016 David Robillard <d@drobilla.net>
   Copyright 2011 Gabriel M. Beddingfield <gabriel@teuton.org>
@@ -437,10 +437,10 @@ extract_gain_from_atom(const LV2_Atom* atom)
     const float atom_gain = ((LV2_Atom_Float*)atom)->body;
     if (atom_gain > 1.0f)
         return 1.0f;
-    
+
     if (atom_gain < 0.0f)
         return 0.0f;
-    
+
     return atom_gain;
 }
 
@@ -647,7 +647,7 @@ run(LV2_Handle instance, uint32_t sample_count)
 
     check_freewheeling(self);
     sfizz_render_block(self->synth, self->output_buffers, 2, (int)sample_count);
-    
+
     if (self->should_send_state) {
         send_all_rank_states(self);
     }
