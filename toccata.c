@@ -255,7 +255,7 @@ instantiate(const LV2_Descriptor* descriptor,
     const LV2_Feature* const* features)
 {
     UNUSED(descriptor);
-    LV2_Options_Option* options;
+    LV2_Options_Option* options = NULL;
     bool supports_bounded_block_size = false;
     bool options_has_block_size = false;
     bool supports_fixed_block_size = false;
@@ -386,10 +386,8 @@ cleanup(LV2_Handle instance)
 }
 
 static void
-activate(LV2_Handle instance)
+send_all_rank_cc(toccata_plugin_t* self)
 {
-    toccata_plugin_t* self = (toccata_plugin_t*)instance;
-    self->activated = true;
     sfizz_send_hdcc(self->synth, 0, TOCCATA_BOURDON16_CC, self->bourdon16_gain);
     sfizz_send_hdcc(self->synth, 0, TOCCATA_BOURDON8_CC, self->bourdon8_gain);
     sfizz_send_hdcc(self->synth, 0, TOCCATA_MONTRE8_CC, self->montre8_gain);
@@ -405,6 +403,14 @@ activate(LV2_Handle instance)
 }
 
 static void
+activate(LV2_Handle instance)
+{
+    toccata_plugin_t* self = (toccata_plugin_t*)instance;
+    self->activated = true;
+    send_all_rank_cc(self);
+}
+
+static void
 deactivate(LV2_Handle instance)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
@@ -412,7 +418,7 @@ deactivate(LV2_Handle instance)
 }
 
 static void
-toccata_process_midi_event(toccata_plugin_t* self, const LV2_Atom_Event* ev)
+process_midi_event(toccata_plugin_t* self, const LV2_Atom_Event* ev)
 {
     const uint8_t* const msg = (const uint8_t*)(ev + 1);
     switch (lv2_midi_message_type(msg)) {
@@ -644,7 +650,7 @@ run(LV2_Handle instance, uint32_t sample_count)
             }
             // Got an atom that is a MIDI event
         } else if (ev->body.type == self->midi_event_uri) {
-            toccata_process_midi_event(self, ev);
+            process_midi_event(self, ev);
         }
     }
 
@@ -714,6 +720,7 @@ restore(LV2_Handle instance,
     value = retrieve(handle, self->name ## _uri, &size, &type, &val_flags); \
     if (value) { \
         self->name ## _gain = clamp_gain(*(const float *)value); \
+        lv2_log_note(&self->logger, "[toccata] Restoring %d with gain %f", self->name ## _uri, self->name ## _gain); \
     }
 
     RESTORE_GAIN(bourdon16);
@@ -730,7 +737,7 @@ restore(LV2_Handle instance,
     RESTORE_GAIN(trompette8);
 
 #undef RESTORE_GAIN
-
+    send_all_rank_states(self);
 
     return LV2_STATE_SUCCESS;
 }
