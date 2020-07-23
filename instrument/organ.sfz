@@ -25,7 +25,7 @@
     label_cc$CORNET=Cornet
     label_cc$TROMPETTE8=Trompette 8
 
-    set_hdcc$BOURDON16=1.0
+    set_hdcc$BOURDON16=0.0
     set_hdcc$BOURDON8=1.0
     set_hdcc$MONTRE8=0.0
     set_hdcc$SALICIONAL8=0.0

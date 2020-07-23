@@ -179,6 +179,13 @@ enum {
     FREEWHEEL_PORT
 };
 
+static float clamp_gain(float gain)
+{
+    gain = fminf(1.0f, gain);
+    gain = fmaxf(0.0f, gain);
+    return gain;
+}
+
 static void
 toccata_map_required_uris(toccata_plugin_t* self)
 {
@@ -437,14 +444,7 @@ toccata_process_midi_event(toccata_plugin_t* self, const LV2_Atom_Event* ev)
 static float
 extract_gain_from_atom(const LV2_Atom* atom)
 {
-    const float atom_gain = ((LV2_Atom_Float*)atom)->body;
-    if (atom_gain > 1.0f)
-        return 1.0f;
-
-    if (atom_gain < 0.0f)
-        return 0.0f;
-
-    return atom_gain;
+    return clamp_gain(((LV2_Atom_Float*)atom)->body);
 }
 
 static void
@@ -709,6 +709,29 @@ restore(LV2_Handle instance,
     uint32_t type;
     uint32_t val_flags;
     const void* value;
+
+#define RESTORE_GAIN(name) \
+    value = retrieve(handle, self->name ## _uri, &size, &type, &val_flags); \
+    if (value) { \
+        self->name ## _gain = clamp_gain(*(const float *)value); \
+    }
+
+    RESTORE_GAIN(bourdon16);
+    RESTORE_GAIN(bourdon8);
+    RESTORE_GAIN(montre8);
+    RESTORE_GAIN(salicional8);
+    RESTORE_GAIN(octave4);
+    RESTORE_GAIN(flute4);
+    RESTORE_GAIN(doublette2);
+    RESTORE_GAIN(nazard);
+    RESTORE_GAIN(tierce);
+    RESTORE_GAIN(fourniture);
+    RESTORE_GAIN(cornet);
+    RESTORE_GAIN(trompette8);
+
+#undef RESTORE_GAIN
+
+
     return LV2_STATE_SUCCESS;
 }
 
@@ -722,6 +745,29 @@ save(LV2_Handle instance,
     UNUSED(flags);
     UNUSED(features);
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
+
+#define STORE_GAIN(name) \
+    store(handle, \
+        self->name ## _uri, \
+        &self->name ## _gain, \
+        sizeof(float), \
+        self->atom_float_uri, \
+        LV2_STATE_IS_POD | LV2_STATE_IS_PORTABLE);
+
+    STORE_GAIN(bourdon16);
+    STORE_GAIN(bourdon8);
+    STORE_GAIN(montre8);
+    STORE_GAIN(salicional8);
+    STORE_GAIN(octave4);
+    STORE_GAIN(flute4);
+    STORE_GAIN(doublette2);
+    STORE_GAIN(nazard);
+    STORE_GAIN(tierce);
+    STORE_GAIN(fourniture);
+    STORE_GAIN(cornet);
+    STORE_GAIN(trompette8);
+
+#undef STORE_GAIN
 
     return LV2_STATE_SUCCESS;
 }
