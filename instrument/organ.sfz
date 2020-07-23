@@ -1,0 +1,79 @@
+<control>
+    #define $BOURDON16 200
+    #define $BOURDON8 201
+    #define $MONTRE8 202
+    #define $SALICIONAL8 203
+    #define $OCTAVE4 204
+    #define $FLUTE4 205
+    #define $DOUBLETTE2 206
+    #define $NAZARD 207
+    #define $TIERCE 208
+    #define $FOURNITURE 209
+    #define $CORNET 210
+    #define $TROMPETTE8 211
+
+    label_cc$BOURDON16=Bourdon 16
+    label_cc$BOURDON8=Bourdon 8
+    label_cc$MONTRE8=Montre 8
+    label_cc$SALICIONAL8=Salicional 8
+    label_cc$OCTAVE4=Octave 4
+    label_cc$FLUTE4=Flute 4
+    label_cc$DOUBLETTE2=Doublette 2
+    label_cc$NAZARD=Nazard
+    label_cc$TIERCE=Tierce
+    label_cc$FOURNITURE=Fourniture
+    label_cc$CORNET=Cornet
+    label_cc$TROMPETTE8=Trompette 8
+
+    set_hdcc$BOURDON16=1.0
+    set_hdcc$BOURDON8=1.0
+    set_hdcc$MONTRE8=0.0
+    set_hdcc$SALICIONAL8=0.0
+    set_hdcc$OCTAVE4=0.0
+    set_hdcc$FLUTE4=0.0
+    set_hdcc$DOUBLETTE2=0.0
+    set_hdcc$NAZARD=0.0
+    set_hdcc$TIERCE=0.0
+    set_hdcc$FOURNITURE=0.0
+    set_hdcc$CORNET=0.0
+    set_hdcc$TROMPETTE8=0.0
+
+<global> ampeg_release=0.1
+
+<group> amplitude_cc$BOURDON16=100 transpose=-12
+<region> ampeg_attack=0.3 oscillator=on sample=bourdon16_2.wav
+
+<group> amplitude_cc$BOURDON8=100 transpose=-12
+<region> ampeg_attack=0.3 oscillator=on sample=bourdon8.wav
+
+<group> amplitude_cc$MONTRE8=100
+<region> ampeg_attack=0.02 oscillator=on sample=montre8.wav
+
+<group> amplitude_cc$SALICIONAL8=100
+<region> ampeg_attack=0.02 oscillator=on sample=salicional8.wav
+
+<group> amplitude_cc$OCTAVE4=100 transpose=12
+<region> loop_mode=one_shot ampeg_attack=0.02 oscillator=on sample=octave4_attack.wav
+<region> ampeg_delay=0.02 ampeg_attack=0.05 oscillator=on sample=octave4.wav
+
+<group> amplitude_cc$FLUTE4=100 transpose=-12
+<region> ampeg_attack=0.02 oscillator=on sample=flute4.wav
+
+<group> amplitude_cc$DOUBLETTE2=100
+<region> ampeg_attack=0.02 oscillator=on sample=doublette2.wav
+
+<group> amplitude_cc$NAZARD=100
+<region> ampeg_attack=0.02 oscillator=on sample=nazard.wav
+
+<group> amplitude_cc$TIERCE=100 transpose=12
+<region> ampeg_attack=0.02 oscillator=on sample=tierce.wav
+
+<group> amplitude_cc$FOURNITURE=100
+<region> ampeg_attack=0.02 oscillator=on sample=fourniture.wav
+
+<group> amplitude_cc$CORNET=100
+<region> ampeg_attack=0.02 oscillator=on sample=cornet.wav
+
+<group> amplitude_cc$TROMPETTE8=100
+<region> loop_mode=one_shot ampeg_attack=0.02 oscillator=on sample=trompette8_attack.wav
+<region> ampeg_delay=0.02 ampeg_attack=0.05 oscillator=on sample=trompette8.wav

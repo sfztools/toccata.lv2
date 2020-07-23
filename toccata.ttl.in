@@ -1,0 +1,212 @@
+@prefix atom:    <http://lv2plug.in/ns/ext/atom#> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix lv2:     <http://lv2plug.in/ns/lv2core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix urid:    <http://lv2plug.in/ns/ext/urid#> .
+@prefix midi:    <http://lv2plug.in/ns/ext/midi#> .
+@prefix bufsize: <http://lv2plug.in/ns/ext/buf-size#> .
+@prefix opts: 	 <http://lv2plug.in/ns/ext/options#> .
+@prefix patch: 	 <http://lv2plug.in/ns/ext/patch#> .
+@prefix state:   <http://lv2plug.in/ns/ext/state#> .
+@prefix pg:      <http://lv2plug.in/ns/ext/port-groups#> .
+
+<@LV2PLUGIN_URI@#registration>
+  a pg:Group ;
+  lv2:symbol "registration" ;
+  lv2:name "Registration".
+
+<@LV2PLUGIN_URI@:bourdon16>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Bourdon 16" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:bourdon8>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Bourdon 8" ;
+  lv2:default 1 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:montre8>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Montre 8" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:salicional8>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Salicional 8" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:octave4>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Octave 4" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:flute4>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Flute 4" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:doublette2>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Doublette 2" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:nazard>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Nazard" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:tierce>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Tierce" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:fourniture>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Fourniture" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:cornet>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Cornet" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@:trompette8>
+  a lv2:Parameter ;
+  pg:group <@LV2PLUGIN_URI@#registration> ;
+  rdfs:label "Trompette 8" ;
+  lv2:default 0 ;
+  lv2:minimum 0 ;
+  lv2:maximum 1 ;
+  rdfs:range atom:Float .
+
+<@LV2PLUGIN_URI@>
+	a doap:Project, lv2:Plugin ;
+	doap:name "@LV2PLUGIN_NAME@" ;
+	doap:license <https://spdx.org/licenses/@LV2PLUGIN_SPDX_LICENSE_ID@> ;
+	doap:maintainer [
+		foaf:name     "@LV2PLUGIN_AUTHOR@" ;
+		foaf:homepage <@LV2PLUGIN_URI@> ;
+		foaf:mbox     <mailto:@LV2PLUGIN_EMAIL@> ;
+	] ;
+	rdfs:comment "@LV2PLUGIN_COMMENT@";
+	lv2:minorVersion @LV2PLUGIN_VERSION_MINOR@ ;
+	lv2:microVersion @LV2PLUGIN_VERSION_MICRO@ ;
+	lv2:requiredFeature urid:map, bufsize:boundedBlockLength;
+	lv2:optionalFeature lv2:hardRTCapable, opts:options;
+	lv2:extensionData opts:interface, state:interface;
+
+	patch:writable 
+        <@LV2PLUGIN_URI@:bourdon16>, 
+        <@LV2PLUGIN_URI@:bourdon8>, 
+        <@LV2PLUGIN_URI@:montre8>, 
+        <@LV2PLUGIN_URI@:salicional8>, 
+        <@LV2PLUGIN_URI@:octave4>, 
+        <@LV2PLUGIN_URI@:flute4>, 
+        <@LV2PLUGIN_URI@:doublette2>, 
+        <@LV2PLUGIN_URI@:nazard>, 
+        <@LV2PLUGIN_URI@:tierce>, 
+        <@LV2PLUGIN_URI@:fourniture>, 
+        <@LV2PLUGIN_URI@:cornet>, 
+        <@LV2PLUGIN_URI@:trompette8>;
+	patch:readable 
+        <@LV2PLUGIN_URI@:bourdon16>,
+        <@LV2PLUGIN_URI@:bourdon8>,
+        <@LV2PLUGIN_URI@:montre8>,
+        <@LV2PLUGIN_URI@:salicional8>,
+        <@LV2PLUGIN_URI@:octave4>,
+        <@LV2PLUGIN_URI@:flute4>,
+        <@LV2PLUGIN_URI@:doublette2>,
+        <@LV2PLUGIN_URI@:nazard>,
+        <@LV2PLUGIN_URI@:tierce>,
+        <@LV2PLUGIN_URI@:fourniture>,
+        <@LV2PLUGIN_URI@:cornet>,
+        <@LV2PLUGIN_URI@:trompette8>;
+
+	lv2:port [
+		a lv2:InputPort, atom:AtomPort ;
+		atom:bufferType atom:Sequence ;
+		atom:supports patch:Message, midi:MidiEvent ;
+		lv2:designation lv2:control ;
+		lv2:index 0 ;
+		lv2:symbol "in" ;
+		lv2:name "Input"
+	] , [
+		a lv2:OutputPort, atom:AtomPort ;
+		atom:bufferType atom:Sequence ;
+		atom:supports patch:Message ;
+		lv2:designation lv2:control ;
+		lv2:index 1 ;
+		lv2:symbol "out" ;
+		lv2:name "Output" ;
+    ] , [
+		a lv2:AudioPort, lv2:OutputPort ;
+		lv2:index 2 ;
+		lv2:symbol "out_left" ;
+		lv2:name "Left Output",
+			"Sortie gauche"@fr ,
+			"Uscita Sinistra"@it
+	] , [
+		a lv2:AudioPort, lv2:OutputPort ;
+		lv2:index 3 ;
+		lv2:symbol "out_right" ;
+		lv2:name "Right Output",
+			"Sortie droite"@fr ,
+			"Uscita Destra"@it
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 4 ;
+		lv2:symbol "freewheeling" ;
+		lv2:name "Freewheeling",
+		"En roue libre (freewheeling)"@fr ,
+		"A Ruota Libera"@it ;
+		lv2:designation lv2:freeWheeling ;
+		lv2:portProperty lv2:toggled ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	].
