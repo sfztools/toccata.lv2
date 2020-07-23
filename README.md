@@ -10,5 +10,6 @@ To do:
 - Add some simple reverb to sfizz and integrate a slider here so it sound better standalone
 - Add a crescendo pedal
 - Work on the wavetables: better management of attack, randomization, panning, etc...
+- Proper state and preset handling
 
 You need to have `libsfizz` and its headers installed to build the plugin.
