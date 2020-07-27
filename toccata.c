@@ -73,31 +73,24 @@
 #define TOCCATA_CORNET_CC 210
 #define TOCCATA_TROMPETTE8_CC 211
 
-#define TOCCATA_BOURDON16_DEFAULT 0.0f
-#define TOCCATA_BOURDON8_DEFAULT 1.0f
-#define TOCCATA_MONTRE8_DEFAULT 0.0f
-#define TOCCATA_SALICIONAL8_DEFAULT 0.0f
-#define TOCCATA_OCTAVE4_DEFAULT 0.0f
-#define TOCCATA_FLUTE4_DEFAULT 0.0f
-#define TOCCATA_DOUBLETTE2_DEFAULT 0.0f
-#define TOCCATA_NAZARD_DEFAULT 0.0f
-#define TOCCATA_TIERCE_DEFAULT 0.0f
-#define TOCCATA_FOURNITURE_DEFAULT 0.0f
-#define TOCCATA_CORNET_DEFAULT 0.0f
-#define TOCCATA_TROMPETTE8_DEFAULT 0.0f
-
-#define TOCCATA_BOURDON16_URI TOCCATA_URI ":" "bourdon16"
-#define TOCCATA_BOURDON8_URI TOCCATA_URI ":" "bourdon8"
-#define TOCCATA_MONTRE8_URI TOCCATA_URI ":" "montre8"
-#define TOCCATA_SALICIONAL8_URI TOCCATA_URI ":" "salicional8"
-#define TOCCATA_OCTAVE4_URI TOCCATA_URI ":" "octave4"
-#define TOCCATA_FLUTE4_URI TOCCATA_URI ":" "flute4"
-#define TOCCATA_DOUBLETTE2_URI TOCCATA_URI ":" "doublette2"
-#define TOCCATA_NAZARD_URI TOCCATA_URI ":" "nazard"
-#define TOCCATA_TIERCE_URI TOCCATA_URI ":" "tierce"
-#define TOCCATA_FOURNITURE_URI TOCCATA_URI ":" "fourniture"
-#define TOCCATA_CORNET_URI TOCCATA_URI ":" "cornet"
-#define TOCCATA_TROMPETTE8_URI TOCCATA_URI ":" "trompette8"
+enum {
+    INPUT_PORT = 0,
+    LEFT_BUFFER,
+    RIGHT_BUFFER,
+    FREEWHEEL_PORT,
+    BOURDON16_PORT,
+    BOURDON8_PORT,
+    MONTRE8_PORT,
+    SALICIONAL8_PORT,
+    OCTAVE4_PORT,
+    FLUTE4_PORT,
+    DOUBLETTE2_PORT,
+    NAZARD_PORT,
+    TIERCE_PORT,
+    FOURNITURE_PORT,
+    CORNET_PORT,
+    TROMPETTE8_PORT
+};
 
 typedef struct
 {
@@ -108,9 +101,33 @@ typedef struct
 
     // Ports
     const LV2_Atom_Sequence* input_port;
-    LV2_Atom_Sequence* output_port;
     float *output_buffers[2];
     const float *freewheel_port;
+    const float *bourdon16_port;
+    const float *bourdon8_port;
+    const float *montre8_port;
+    const float *salicional8_port;
+    const float *octave4_port;
+    const float *flute4_port;
+    const float *doublette2_port;
+    const float *nazard_port;
+    const float *tierce_port;
+    const float *fourniture_port;
+    const float *cornet_port;
+    const float *trompette8_port;
+
+    float bourdon16_gain;
+    float bourdon8_gain;
+    float montre8_gain;
+    float salicional8_gain;
+    float octave4_gain;
+    float flute4_gain;
+    float doublette2_gain;
+    float nazard_gain;
+    float tierce_gain;
+    float fourniture_gain;
+    float cornet_gain;
+    float trompette8_gain;
 
     // Atom forge
     LV2_Atom_Forge forge; ///< Forge for writing atoms in run thread
@@ -131,53 +148,13 @@ typedef struct
     LV2_URID atom_urid_uri;
     LV2_URID atom_string_uri;
     LV2_URID atom_bool_uri;
-    LV2_URID atom_path_uri;
-    LV2_URID patch_set_uri;
-    LV2_URID patch_get_uri;
-    LV2_URID patch_put_uri;
-    LV2_URID patch_property_uri;
-    LV2_URID patch_value_uri;
-    LV2_URID patch_body_uri;
-    LV2_URID bourdon16_uri;
-    LV2_URID bourdon8_uri;
-    LV2_URID montre8_uri;
-    LV2_URID salicional8_uri;
-    LV2_URID octave4_uri;
-    LV2_URID flute4_uri;
-    LV2_URID doublette2_uri;
-    LV2_URID nazard_uri;
-    LV2_URID tierce_uri;
-    LV2_URID fourniture_uri;
-    LV2_URID cornet_uri;
-    LV2_URID trompette8_uri;
 
     bool activated;
-    bool should_send_state;
     int max_block_size;
     double sample_rate;
-    float bourdon16_gain;
-    float bourdon8_gain;
-    float montre8_gain;
-    float salicional8_gain;
-    float octave4_gain;
-    float flute4_gain;
-    float doublette2_gain;
-    float nazard_gain;
-    float tierce_gain;
-    float fourniture_gain;
-    float cornet_gain;
-    float trompette8_gain;
     // Sfizz related data
     sfizz_synth_t *synth;
 } toccata_plugin_t;
-
-enum {
-    INPUT_PORT = 0,
-    OUTPUT_PORT,
-    LEFT_BUFFER,
-    RIGHT_BUFFER,
-    FREEWHEEL_PORT
-};
 
 static float clamp_gain(float gain)
 {
@@ -196,29 +173,9 @@ toccata_map_required_uris(toccata_plugin_t* self)
     self->sample_rate_uri = map->map(map->handle, LV2_PARAMETERS__sampleRate);
     self->atom_float_uri = map->map(map->handle, LV2_ATOM__Float);
     self->atom_int_uri = map->map(map->handle, LV2_ATOM__Int);
-    self->atom_path_uri = map->map(map->handle, LV2_ATOM__Path);
     self->atom_bool_uri = map->map(map->handle, LV2_ATOM__Bool);
     self->atom_string_uri = map->map(map->handle, LV2_ATOM__String);
     self->atom_urid_uri = map->map(map->handle, LV2_ATOM__URID);
-    self->atom_object_uri = map->map(map->handle, LV2_ATOM__Object);
-    self->patch_set_uri = map->map(map->handle, LV2_PATCH__Set);
-    self->patch_get_uri = map->map(map->handle, LV2_PATCH__Get);
-    self->patch_put_uri = map->map(map->handle, LV2_PATCH__Put);
-    self->patch_body_uri = map->map(map->handle, LV2_PATCH__body);
-    self->patch_property_uri = map->map(map->handle, LV2_PATCH__property);
-    self->patch_value_uri = map->map(map->handle, LV2_PATCH__value);
-    self->bourdon16_uri = map->map(map->handle, TOCCATA_BOURDON16_URI);
-    self->bourdon8_uri = map->map(map->handle, TOCCATA_BOURDON8_URI);
-    self->montre8_uri = map->map(map->handle, TOCCATA_MONTRE8_URI);
-    self->salicional8_uri = map->map(map->handle, TOCCATA_SALICIONAL8_URI);
-    self->octave4_uri = map->map(map->handle, TOCCATA_OCTAVE4_URI);
-    self->flute4_uri = map->map(map->handle, TOCCATA_FLUTE4_URI);
-    self->doublette2_uri = map->map(map->handle, TOCCATA_DOUBLETTE2_URI);
-    self->nazard_uri = map->map(map->handle, TOCCATA_NAZARD_URI);
-    self->tierce_uri = map->map(map->handle, TOCCATA_TIERCE_URI);
-    self->fourniture_uri = map->map(map->handle, TOCCATA_FOURNITURE_URI);
-    self->cornet_uri = map->map(map->handle, TOCCATA_CORNET_URI);
-    self->trompette8_uri = map->map(map->handle, TOCCATA_TROMPETTE8_URI);
 }
 
 static void
@@ -232,9 +189,6 @@ connect_port(LV2_Handle instance,
     case INPUT_PORT:
         self->input_port = (const LV2_Atom_Sequence*)data;
         break;
-    case OUTPUT_PORT:
-        self->output_port = (LV2_Atom_Sequence*)data;
-        break;
     case LEFT_BUFFER:
         self->output_buffers[0] = (float *)data;
         break;
@@ -243,6 +197,43 @@ connect_port(LV2_Handle instance,
         break;
     case FREEWHEEL_PORT:
         self->freewheel_port = (const float *)data;
+        break;
+    case BOURDON16_PORT:
+        self->bourdon16_port = (const float*)data;
+        break;
+    case BOURDON8_PORT:
+        self->bourdon8_port = (const float*)data;
+        break;
+    case MONTRE8_PORT:
+        self->montre8_port = (const float*)data;
+        break;
+    case SALICIONAL8_PORT:
+        self->salicional8_port = (const float*)data;
+        break;
+    case OCTAVE4_PORT:
+        self->octave4_port = (const float*)data;
+        break;
+    case FLUTE4_PORT:
+        self->flute4_port = (const float*)data;
+        break;
+    case DOUBLETTE2_PORT:
+        self->doublette2_port = (const float*)data;
+        break;
+    case NAZARD_PORT:
+        self->nazard_port = (const float*)data;
+        break;
+    case TIERCE_PORT:
+        self->tierce_port = (const float*)data;
+        break;
+    case FOURNITURE_PORT:
+        self->fourniture_port = (const float*)data;
+        break;
+    case CORNET_PORT:
+        self->cornet_port = (const float*)data;
+        break;
+    case TROMPETTE8_PORT:
+        self->trompette8_port = (const float*)data;
+        break;
     default:
         break;
     }
@@ -270,19 +261,18 @@ instantiate(const LV2_Descriptor* descriptor,
     self->max_block_size = MAX_BLOCK_SIZE;
     self->sample_rate = rate;
     self->activated = false;
-    self->should_send_state = false;
-    self->bourdon16_gain = TOCCATA_BOURDON16_DEFAULT;
-    self->bourdon8_gain = TOCCATA_BOURDON8_DEFAULT;
-    self->montre8_gain = TOCCATA_MONTRE8_DEFAULT;
-    self->salicional8_gain = TOCCATA_SALICIONAL8_DEFAULT;
-    self->octave4_gain = TOCCATA_OCTAVE4_DEFAULT;
-    self->flute4_gain = TOCCATA_FLUTE4_DEFAULT;
-    self->doublette2_gain = TOCCATA_DOUBLETTE2_DEFAULT;
-    self->nazard_gain = TOCCATA_NAZARD_DEFAULT;
-    self->tierce_gain = TOCCATA_TIERCE_DEFAULT;
-    self->fourniture_gain = TOCCATA_FOURNITURE_DEFAULT;
-    self->cornet_gain = TOCCATA_CORNET_DEFAULT;
-    self->trompette8_gain = TOCCATA_TROMPETTE8_DEFAULT;
+    self->bourdon16_gain = 0.0f;
+    self->bourdon8_gain = 0.0f;
+    self->montre8_gain = 0.0f;
+    self->salicional8_gain = 0.0f;
+    self->octave4_gain = 0.0f;
+    self->flute4_gain = 0.0f;
+    self->doublette2_gain = 0.0f;
+    self->nazard_gain = 0.0f;
+    self->tierce_gain = 0.0f;
+    self->fourniture_gain = 0.0f;
+    self->cornet_gain = 0.0f;
+    self->trompette8_gain = 0.0f;
 
     // Get the features from the host and populate the structure
     for (const LV2_Feature* const* f = features; *f; f++) {
@@ -374,6 +364,8 @@ instantiate(const LV2_Descriptor* descriptor,
     if (!file_loaded)
         return NULL;
 
+
+    lv2_log_note(&self->logger, "Plugin instantiated\n");
     return (LV2_Handle)self;
 }
 
@@ -386,34 +378,18 @@ cleanup(LV2_Handle instance)
 }
 
 static void
-send_all_rank_cc(toccata_plugin_t* self)
-{
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_BOURDON16_CC, self->bourdon16_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_BOURDON8_CC, self->bourdon8_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_MONTRE8_CC, self->montre8_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_SALICIONAL8_CC, self->salicional8_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_OCTAVE4_CC, self->octave4_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_FLUTE4_CC, self->flute4_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_DOUBLETTE2_CC, self->doublette2_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_NAZARD_CC, self->nazard_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_TIERCE_CC, self->tierce_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_FOURNITURE_CC, self->fourniture_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_CORNET_CC, self->cornet_gain);
-    sfizz_send_hdcc(self->synth, 0, TOCCATA_TROMPETTE8_CC, self->trompette8_gain);
-}
-
-static void
 activate(LV2_Handle instance)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
+    lv2_log_note(&self->logger, "Plugin active\n");
     self->activated = true;
-    send_all_rank_cc(self);
 }
 
 static void
 deactivate(LV2_Handle instance)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
+    lv2_log_note(&self->logger, "Plugin desactivated\n");
     self->activated = false;
 }
 
@@ -447,160 +423,6 @@ process_midi_event(toccata_plugin_t* self, const LV2_Atom_Event* ev)
     }
 }
 
-static float
-extract_gain_from_atom(const LV2_Atom* atom)
-{
-    return clamp_gain(((LV2_Atom_Float*)atom)->body);
-}
-
-static void
-handle_patch_set(toccata_plugin_t* self, const LV2_Atom_Object* obj, int64_t frame)
-{
-    const LV2_Atom* property = NULL;
-    lv2_atom_object_get(obj, self->patch_property_uri, &property, 0);
-    if (!property) {
-        lv2_log_error(&self->logger, "Could not get the property from the patch object, aborting.\n");
-        return;
-    }
-
-    if (property->type != self->atom_urid_uri) {
-        lv2_log_error(&self->logger, "Atom type was not a URID, aborting.\n");
-        return;
-    }
-
-    const uint32_t key = ((const LV2_Atom_URID*)property)->body;
-    const LV2_Atom* atom = NULL;
-    lv2_atom_object_get(obj, self->patch_value_uri, &atom, 0);
-    if (!atom) {
-        lv2_log_error(&self->logger, "[handle_patch_set] Error retrieving the atom, aborting.\n");
-        if (self->unmap)
-            lv2_log_warning(&self->logger,
-                "Atom URI: %s\n",
-                self->unmap->unmap(self->unmap->handle, key));
-        return;
-    }
-
-    if (key == self->bourdon16_uri) {
-        self->bourdon16_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_BOURDON16_CC, self->bourdon16_gain);
-    } else if (key == self->bourdon8_uri) {
-        self->bourdon8_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_BOURDON8_CC, self->bourdon8_gain);
-    } else if (key == self->montre8_uri) {
-        self->montre8_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_MONTRE8_CC, self->montre8_gain);
-    } else if (key == self->salicional8_uri) {
-        self->salicional8_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_SALICIONAL8_CC, self->salicional8_gain);
-    } else if (key == self->octave4_uri) {
-        self->octave4_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_OCTAVE4_CC, self->octave4_gain);
-    } else if (key == self->flute4_uri) {
-        self->flute4_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_FLUTE4_CC, self->flute4_gain);
-    } else if (key == self->doublette2_uri) {
-        self->doublette2_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_DOUBLETTE2_CC, self->doublette2_gain);
-    } else if (key == self->nazard_uri) {
-        self->nazard_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_NAZARD_CC, self->nazard_gain);
-    } else if (key == self->tierce_uri) {
-        self->tierce_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_TIERCE_CC, self->tierce_gain);
-    } else if (key == self->fourniture_uri) {
-        self->fourniture_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_FOURNITURE_CC, self->fourniture_gain);
-    } else if (key == self->cornet_uri) {
-        self->cornet_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_CORNET_CC, self->cornet_gain);
-    } else if (key == self->trompette8_uri) {
-        self->trompette8_gain = extract_gain_from_atom(atom);
-        sfizz_send_hdcc(self->synth, frame, TOCCATA_TROMPETTE8_CC, self->trompette8_gain);
-    } else {
-        lv2_log_warning(&self->logger, "[handle_patch_set] Unknown or unsupported object.\n");
-        if (self->unmap)
-            lv2_log_warning(&self->logger,
-                "Object URI: %s\n",
-                self->unmap->unmap(self->unmap->handle, key));
-        return;
-    }
-}
-
-static void
-send_rank_state(toccata_plugin_t* self, float gain, LV2_URID uri)
-{
-    LV2_Atom_Forge_Frame frame;
-    lv2_atom_forge_frame_time(&self->forge, 0);
-    lv2_atom_forge_object(&self->forge, &frame, 0, self->patch_set_uri);
-    lv2_atom_forge_key(&self->forge, self->patch_property_uri);
-    lv2_atom_forge_urid(&self->forge, uri);
-    lv2_atom_forge_key(&self->forge, self->patch_value_uri);
-    lv2_atom_forge_float(&self->forge, gain);
-    lv2_atom_forge_pop(&self->forge, &frame);
-}
-
-static void
-send_all_rank_states(toccata_plugin_t* self)
-{
-    send_rank_state(self, self->bourdon16_gain, self->bourdon16_uri);
-    send_rank_state(self, self->bourdon8_gain, self->bourdon8_uri);
-    send_rank_state(self, self->montre8_gain, self->montre8_uri);
-    send_rank_state(self, self->salicional8_gain, self->salicional8_uri);
-    send_rank_state(self, self->octave4_gain, self->octave4_uri);
-    send_rank_state(self, self->flute4_gain, self->flute4_uri);
-    send_rank_state(self, self->doublette2_gain, self->doublette2_uri);
-    send_rank_state(self, self->nazard_gain, self->nazard_uri);
-    send_rank_state(self, self->tierce_gain, self->tierce_uri);
-    send_rank_state(self, self->fourniture_gain, self->fourniture_uri);
-    send_rank_state(self, self->cornet_gain, self->cornet_uri);
-    send_rank_state(self, self->trompette8_gain, self->trompette8_uri);
-}
-
-static void
-handle_patch_get(toccata_plugin_t* self, const LV2_Atom_Object* obj, int64_t frame)
-{
-    UNUSED(frame);
-    const LV2_Atom_URID* property = NULL;
-    lv2_atom_object_get(obj, self->patch_property_uri, &property, 0);
-    if (!property) // Send the full state
-    {
-        lv2_log_warning(&self->logger, "Got an Patch GET with no body.\n");
-        send_all_rank_states(self);
-        return;
-    } else if (property->body == self->bourdon16_uri) {
-        send_rank_state(self, self->bourdon16_gain, self->bourdon16_uri);
-    } else if (property->body == self->bourdon8_uri) {
-        send_rank_state(self, self->bourdon8_gain, self->bourdon8_uri);
-    } else if (property->body == self->montre8_uri) {
-        send_rank_state(self, self->montre8_gain, self->montre8_uri);
-    } else if (property->body == self->salicional8_uri) {
-        send_rank_state(self, self->salicional8_gain, self->salicional8_uri);
-    } else if (property->body == self->octave4_uri) {
-        send_rank_state(self, self->octave4_gain, self->octave4_uri);
-    } else if (property->body == self->flute4_uri) {
-        send_rank_state(self, self->flute4_gain, self->flute4_uri);
-    } else if (property->body == self->doublette2_uri) {
-        send_rank_state(self, self->doublette2_gain, self->doublette2_uri);
-    } else if (property->body == self->nazard_uri) {
-        send_rank_state(self, self->nazard_gain, self->nazard_uri);
-    } else if (property->body == self->tierce_uri) {
-        send_rank_state(self, self->tierce_gain, self->tierce_uri);
-    } else if (property->body == self->fourniture_uri) {
-        send_rank_state(self, self->fourniture_gain, self->fourniture_uri);
-    } else if (property->body == self->cornet_uri) {
-        send_rank_state(self, self->cornet_gain, self->cornet_uri);
-    } else if (property->body == self->trompette8_uri) {
-        send_rank_state(self, self->trompette8_gain, self->trompette8_uri);
-    } else {
-        lv2_log_warning(&self->logger, "[handle_patch_set] Unknown or unsupported object.\n");
-        if (self->unmap)
-            lv2_log_warning(&self->logger,
-                "Object URI: %s\n",
-                self->unmap->unmap(self->unmap->handle, property->body));
-        return;
-    }
-}
-
 static void
 check_freewheeling(toccata_plugin_t* self)
 {
@@ -615,53 +437,56 @@ check_freewheeling(toccata_plugin_t* self)
 }
 
 static void
+send_cc_if_necessary(toccata_plugin_t* self, const float* port, float* value, int cc)
+{
+    if (*port != *value) {
+        *value = clamp_gain(*port);
+        sfizz_send_hdcc(self->synth, 0, cc, *value);
+    }
+}
+
+static void
 run(LV2_Handle instance, uint32_t sample_count)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
     if (!self->activated)
         return;
 
-    if (!self->input_port || !self->output_port)
+    if (!self->input_port)
         return;
-
-    // Set up forge to write directly to notify output port.
-    const size_t notify_capacity = self->output_port->atom.size;
-    lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->output_port, notify_capacity);
-
-    // Start a sequence in the notify output port.
-    lv2_atom_forge_sequence_head(&self->forge, &self->notify_frame, 0);
 
     LV2_ATOM_SEQUENCE_FOREACH(self->input_port, ev)
     {
         // If the received atom is an object/patch message
         if (ev->body.type == self->atom_object_uri) {
             const LV2_Atom_Object* obj = (const LV2_Atom_Object*)&ev->body;
-            if (obj->body.otype == self->patch_set_uri) {
-                handle_patch_set(self, obj, ev->time.frames);
-            } else if (obj->body.otype == self->patch_get_uri) {
-                handle_patch_get(self, obj, ev->time.frames);
-            } else {
-                lv2_log_warning(&self->logger, "Got an Object atom but it was not supported.\n");
-                if (self->unmap)
-                    lv2_log_warning(&self->logger,
-                        "Object URI: %s\n",
-                        self->unmap->unmap(self->unmap->handle, obj->body.otype));
-                continue;
-            }
+            lv2_log_warning(&self->logger, "Got an Object atom but it was not supported.\n");
+            if (self->unmap)
+                lv2_log_warning(&self->logger,
+                    "Object URI: %s\n",
+                    self->unmap->unmap(self->unmap->handle, obj->body.otype));
+            continue;
             // Got an atom that is a MIDI event
         } else if (ev->body.type == self->midi_event_uri) {
             process_midi_event(self, ev);
         }
     }
 
+    send_cc_if_necessary(self, self->bourdon16_port, &self->bourdon16_gain, TOCCATA_BOURDON16_CC);
+    send_cc_if_necessary(self, self->bourdon8_port, &self->bourdon8_gain, TOCCATA_BOURDON8_CC);
+    send_cc_if_necessary(self, self->montre8_port, &self->montre8_gain, TOCCATA_MONTRE8_CC);
+    send_cc_if_necessary(self, self->salicional8_port, &self->salicional8_gain, TOCCATA_SALICIONAL8_CC);
+    send_cc_if_necessary(self, self->octave4_port, &self->octave4_gain, TOCCATA_OCTAVE4_CC);
+    send_cc_if_necessary(self, self->flute4_port, &self->flute4_gain, TOCCATA_FLUTE4_CC);
+    send_cc_if_necessary(self, self->doublette2_port, &self->doublette2_gain, TOCCATA_DOUBLETTE2_CC);
+    send_cc_if_necessary(self, self->nazard_port, &self->nazard_gain, TOCCATA_NAZARD_CC);
+    send_cc_if_necessary(self, self->tierce_port, &self->tierce_gain, TOCCATA_TIERCE_CC);
+    send_cc_if_necessary(self, self->fourniture_port, &self->fourniture_gain, TOCCATA_FOURNITURE_CC);
+    send_cc_if_necessary(self, self->cornet_port, &self->cornet_gain, TOCCATA_CORNET_CC);
+    send_cc_if_necessary(self, self->trompette8_port, &self->trompette8_gain, TOCCATA_TROMPETTE8_CC);
+
     check_freewheeling(self);
     sfizz_render_block(self->synth, self->output_buffers, 2, (int)sample_count);
-
-    if (self->should_send_state) {
-        send_all_rank_states(self);
-    }
-
-    lv2_atom_forge_pop(&self->forge, &self->notify_frame);
 }
 
 static uint32_t
@@ -699,97 +524,13 @@ lv2_set_options(LV2_Handle instance, const LV2_Options_Option* options)
     return LV2_OPTIONS_SUCCESS;
 }
 
-static LV2_State_Status
-restore(LV2_Handle instance,
-    LV2_State_Retrieve_Function retrieve,
-    LV2_State_Handle handle,
-    uint32_t flags,
-    const LV2_Feature* const* features)
-{
-    UNUSED(flags);
-    UNUSED(features);
-    toccata_plugin_t* self = (toccata_plugin_t*)instance;
-
-    // Fetch back the saved file path, if any
-    size_t size;
-    uint32_t type;
-    uint32_t val_flags;
-    const void* value;
-
-#define RESTORE_GAIN(name) \
-    value = retrieve(handle, self->name ## _uri, &size, &type, &val_flags); \
-    if (value) { \
-        self->name ## _gain = clamp_gain(*(const float *)value); \
-        lv2_log_note(&self->logger, "[toccata] Restoring %d with gain %f", self->name ## _uri, self->name ## _gain); \
-    }
-
-    RESTORE_GAIN(bourdon16);
-    RESTORE_GAIN(bourdon8);
-    RESTORE_GAIN(montre8);
-    RESTORE_GAIN(salicional8);
-    RESTORE_GAIN(octave4);
-    RESTORE_GAIN(flute4);
-    RESTORE_GAIN(doublette2);
-    RESTORE_GAIN(nazard);
-    RESTORE_GAIN(tierce);
-    RESTORE_GAIN(fourniture);
-    RESTORE_GAIN(cornet);
-    RESTORE_GAIN(trompette8);
-
-#undef RESTORE_GAIN
-    send_all_rank_states(self);
-
-    return LV2_STATE_SUCCESS;
-}
-
-static LV2_State_Status
-save(LV2_Handle instance,
-    LV2_State_Store_Function store,
-    LV2_State_Handle handle,
-    uint32_t flags,
-    const LV2_Feature* const* features)
-{
-    UNUSED(flags);
-    UNUSED(features);
-    toccata_plugin_t* self = (toccata_plugin_t*)instance;
-
-#define STORE_GAIN(name) \
-    store(handle, \
-        self->name ## _uri, \
-        &self->name ## _gain, \
-        sizeof(float), \
-        self->atom_float_uri, \
-        LV2_STATE_IS_POD | LV2_STATE_IS_PORTABLE);
-
-    STORE_GAIN(bourdon16);
-    STORE_GAIN(bourdon8);
-    STORE_GAIN(montre8);
-    STORE_GAIN(salicional8);
-    STORE_GAIN(octave4);
-    STORE_GAIN(flute4);
-    STORE_GAIN(doublette2);
-    STORE_GAIN(nazard);
-    STORE_GAIN(tierce);
-    STORE_GAIN(fourniture);
-    STORE_GAIN(cornet);
-    STORE_GAIN(trompette8);
-
-#undef STORE_GAIN
-
-    return LV2_STATE_SUCCESS;
-}
-
 static const void*
 extension_data(const char* uri)
 {
     static const LV2_Options_Interface options = { lv2_get_options, lv2_set_options };
-    static const LV2_State_Interface state = { save, restore };
-
     // Advertise the extensions we support
     if (!strcmp(uri, LV2_OPTIONS__interface))
         return &options;
-    else if (!strcmp(uri, LV2_STATE__interface))
-        return &state;
 
     return NULL;
 }
