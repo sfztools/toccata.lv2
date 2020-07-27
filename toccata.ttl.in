@@ -16,114 +16,6 @@
   lv2:symbol "registration" ;
   lv2:name "Registration".
 
-<@LV2PLUGIN_URI@:bourdon16>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Bourdon 16" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:bourdon8>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Bourdon 8" ;
-  lv2:default 1 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:montre8>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Montre 8" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:salicional8>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Salicional 8" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:octave4>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Octave 4" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:flute4>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Flute 4" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:doublette2>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Doublette 2" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:nazard>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Nazard" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:tierce>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Tierce" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:fourniture>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Fourniture" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:cornet>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Cornet" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
-<@LV2PLUGIN_URI@:trompette8>
-  a lv2:Parameter ;
-  pg:group <@LV2PLUGIN_URI@#registration> ;
-  rdfs:label "Trompette 8" ;
-  lv2:default 0 ;
-  lv2:minimum 0 ;
-  lv2:maximum 1 ;
-  rdfs:range atom:Float .
-
 <@LV2PLUGIN_URI@>
 	a doap:Project, lv2:Plugin ;
 	doap:name "@LV2PLUGIN_NAME@" ;
@@ -138,34 +30,7 @@
 	lv2:microVersion @LV2PLUGIN_VERSION_MICRO@ ;
 	lv2:requiredFeature urid:map, bufsize:boundedBlockLength;
 	lv2:optionalFeature lv2:hardRTCapable, opts:options;
-	lv2:extensionData opts:interface, state:interface;
-
-	patch:writable 
-        <@LV2PLUGIN_URI@:bourdon16>, 
-        <@LV2PLUGIN_URI@:bourdon8>, 
-        <@LV2PLUGIN_URI@:montre8>, 
-        <@LV2PLUGIN_URI@:salicional8>, 
-        <@LV2PLUGIN_URI@:octave4>, 
-        <@LV2PLUGIN_URI@:flute4>, 
-        <@LV2PLUGIN_URI@:doublette2>, 
-        <@LV2PLUGIN_URI@:nazard>, 
-        <@LV2PLUGIN_URI@:tierce>, 
-        <@LV2PLUGIN_URI@:fourniture>, 
-        <@LV2PLUGIN_URI@:cornet>, 
-        <@LV2PLUGIN_URI@:trompette8>;
-	patch:readable 
-        <@LV2PLUGIN_URI@:bourdon16>,
-        <@LV2PLUGIN_URI@:bourdon8>,
-        <@LV2PLUGIN_URI@:montre8>,
-        <@LV2PLUGIN_URI@:salicional8>,
-        <@LV2PLUGIN_URI@:octave4>,
-        <@LV2PLUGIN_URI@:flute4>,
-        <@LV2PLUGIN_URI@:doublette2>,
-        <@LV2PLUGIN_URI@:nazard>,
-        <@LV2PLUGIN_URI@:tierce>,
-        <@LV2PLUGIN_URI@:fourniture>,
-        <@LV2PLUGIN_URI@:cornet>,
-        <@LV2PLUGIN_URI@:trompette8>;
+	lv2:extensionData opts:interface;
 
 	lv2:port [
 		a lv2:InputPort, atom:AtomPort ;
@@ -176,36 +41,136 @@
 		lv2:symbol "in" ;
 		lv2:name "Input"
 	] , [
-		a lv2:OutputPort, atom:AtomPort ;
-		atom:bufferType atom:Sequence ;
-		atom:supports patch:Message ;
-		lv2:designation lv2:control ;
-		lv2:index 1 ;
-		lv2:symbol "out" ;
-		lv2:name "Output" ;
-    ] , [
 		a lv2:AudioPort, lv2:OutputPort ;
-		lv2:index 2 ;
+		lv2:index 1 ;
 		lv2:symbol "out_left" ;
 		lv2:name "Left Output",
 			"Sortie gauche"@fr ,
 			"Uscita Sinistra"@it
 	] , [
 		a lv2:AudioPort, lv2:OutputPort ;
-		lv2:index 3 ;
+		lv2:index 2 ;
 		lv2:symbol "out_right" ;
 		lv2:name "Right Output",
 			"Sortie droite"@fr ,
 			"Uscita Destra"@it
 	] , [
 		a lv2:InputPort, lv2:ControlPort ;
-		lv2:index 4 ;
+		lv2:index 3 ;
 		lv2:symbol "freewheeling" ;
 		lv2:name "Freewheeling",
 		"En roue libre (freewheeling)"@fr ,
 		"A Ruota Libera"@it ;
 		lv2:designation lv2:freeWheeling ;
 		lv2:portProperty lv2:toggled ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 4 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "bourdon16" ;
+		lv2:name "Bourdon 16" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 5 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "bourdon8" ;
+		lv2:name "Bourdon 8" ;
+		lv2:default 1 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 6 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "montre8" ;
+		lv2:name "Montre 8" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 7 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "salicional8" ;
+		lv2:name "Salicional 8" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 8 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "octave4" ;
+		lv2:name "Octave 4" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 9 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "flute4" ;
+		lv2:name "Flute 4" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 10 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "doublette2" ;
+		lv2:name "Doublette 2" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 11 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "nazard" ;
+		lv2:name "Nazard" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 12 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "tierce" ;
+		lv2:name "Tierce" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 13 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "fourniture" ;
+		lv2:name "Fourniture" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 14 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "cornet" ;
+		lv2:name "Cornet" ;
+		lv2:default 0 ;
+		lv2:minimum 0 ;
+		lv2:maximum 1 ;
+	] , [
+		a lv2:InputPort, lv2:ControlPort ;
+		lv2:index 15 ;
+    pg:group <@LV2PLUGIN_URI@#registration> ;
+		lv2:symbol "trompette8" ;
+		lv2:name "Trompette 8" ;
 		lv2:default 0 ;
 		lv2:minimum 0 ;
 		lv2:maximum 1 ;
