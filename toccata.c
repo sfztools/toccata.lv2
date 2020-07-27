@@ -184,7 +184,6 @@ connect_port(LV2_Handle instance,
     void* data)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
-    // lv2_log_note(&self->logger, "[connect_port] Called for index %d on address %p\n", port, data);
     switch (port) {
     case INPUT_PORT:
         self->input_port = (const LV2_Atom_Sequence*)data;
@@ -276,7 +275,6 @@ instantiate(const LV2_Descriptor* descriptor,
 
     // Get the features from the host and populate the structure
     for (const LV2_Feature* const* f = features; *f; f++) {
-        // lv2_log_note(&self->logger, "Feature URI: %s\n", (**f).URI);
 
         if (!strcmp((**f).URI, LV2_URID__map))
             self->map = (**f).data;
@@ -365,7 +363,6 @@ instantiate(const LV2_Descriptor* descriptor,
         return NULL;
 
 
-    lv2_log_note(&self->logger, "Plugin instantiated\n");
     return (LV2_Handle)self;
 }
 
@@ -381,7 +378,6 @@ static void
 activate(LV2_Handle instance)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
-    lv2_log_note(&self->logger, "Plugin active\n");
     self->activated = true;
 }
 
@@ -389,7 +385,6 @@ static void
 deactivate(LV2_Handle instance)
 {
     toccata_plugin_t* self = (toccata_plugin_t*)instance;
-    lv2_log_note(&self->logger, "Plugin desactivated\n");
     self->activated = false;
 }
 
