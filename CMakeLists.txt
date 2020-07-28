@@ -21,6 +21,7 @@ set (LV2PLUGIN_TTL_SRC_FILES
 )
 add_library (${LV2PLUGIN_PRJ_NAME} MODULE ${PROJECT_NAME}.c ${LV2PLUGIN_TTL_SRC_FILES})
 target_link_libraries (${LV2PLUGIN_PRJ_NAME} sfizz)
+target_include_directories (${LV2PLUGIN_PRJ_NAME} PRIVATE .)
 
 # Explicitely strip all symbols on Linux but lv2_descriptor()
 # MacOS linker does not support this apparently https://bugs.webkit.org/show_bug.cgi?id=144555
