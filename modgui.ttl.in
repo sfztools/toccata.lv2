@@ -1,0 +1,66 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
+
+<@LV2PLUGIN_URI@>
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-toccata.html> ;
+        modgui:stylesheet <modgui/stylesheet-toccata.css> ;
+        modgui:screenshot <modgui/screenshot-toccata.png> ;
+        modgui:thumbnail <modgui/thumbnail-toccata.png> ;
+        modgui:brand "" ;
+        modgui:label "SFZTools' Toccata" ;
+        modgui:model "boxy" ;
+        modgui:panel "7-knobs" ;
+        modgui:color "wood1" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "bourdon16" ;
+            lv2:name "Bourdon 16" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "bourdon8" ;
+            lv2:name "Bourdon 8" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "montre8" ;
+            lv2:name "Montre 8" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "salicional8" ;
+            lv2:name "Salic. 8" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "octave4" ;
+            lv2:name "Octave 4" ;
+        ] , [
+            lv2:index 5 ;
+            lv2:symbol "flute4" ;
+            lv2:name "Flute 4" ;
+        ] , [
+            lv2:index 6 ;
+            lv2:symbol "doublette2" ;
+            lv2:name "Doubl. 2" ;
+        ] , [
+            lv2:index 7 ;
+            lv2:symbol "nazard" ;
+            lv2:name "Nazard" ;
+        ]  , [
+            lv2:index 8 ;
+            lv2:symbol "tierce" ;
+            lv2:name "Tierce" ;
+        ]  , [
+            lv2:index 9 ;
+            lv2:symbol "fourniture" ;
+            lv2:name "Fourn." ;
+        ]  , [
+            lv2:index 10 ;
+            lv2:symbol "cornet" ;
+            lv2:name "Cornet" ;
+        ]  , [
+            lv2:index 11 ;
+            lv2:symbol "trompette8" ;
+            lv2:name "Tromp. 8" ;
+        ] ;
+    ] .
