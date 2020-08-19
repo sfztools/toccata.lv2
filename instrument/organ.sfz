@@ -64,15 +64,15 @@
 // filter_type=lpf_1p
 // filter_cutoff=10000
 
-<effect>
-bus=main
-type=fverb
-reverb_dry=100
-reverb_wet=100
-reverb_size=50
-reverb_type=large_hall
-reverb_input=100
-reverb_tone=100
-reverb_damp=0
-reverb_predelay=0.1
+// <effect>
+// bus=main
+// type=fverb
+// reverb_dry=100
+// reverb_wet=100
+// reverb_size=50
+// reverb_type=large_hall
+// reverb_input=100
+// reverb_tone=100
+// reverb_damp=0
+// reverb_predelay=0.1
 
