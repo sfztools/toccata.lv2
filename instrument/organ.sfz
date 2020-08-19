@@ -1,79 +1,78 @@
 <control>
-    #define $BOURDON16 200
-    #define $BOURDON8 201
-    #define $MONTRE8 202
-    #define $SALICIONAL8 203
-    #define $OCTAVE4 204
-    #define $FLUTE4 205
-    #define $DOUBLETTE2 206
-    #define $NAZARD 207
-    #define $TIERCE 208
-    #define $FOURNITURE 209
-    #define $CORNET 210
-    #define $TROMPETTE8 211
+    #define $BOURDON16 100
+    #define $FLUTE8 101
+    #define $MONTRE8 102
+    #define $FLUTE4 103
+    #define $PRESTANT4 104
+    #define $DOUBLETTE2 105
+    #define $PLEINJEUX 106
+    #define $SESQUIALTERA 107
+    #define $TROMPETTE8 108
 
     label_cc$BOURDON16=Bourdon 16
-    label_cc$BOURDON8=Bourdon 8
+    label_cc$FLUTE8=Flute 8
     label_cc$MONTRE8=Montre 8
-    label_cc$SALICIONAL8=Salicional 8
-    label_cc$OCTAVE4=Octave 4
-    label_cc$FLUTE4=Flute 4
+    label_cc$FLUTE4=Flute à fuseaux 4
+    label_cc$PRESTANT4=Prestant 4
     label_cc$DOUBLETTE2=Doublette 2
-    label_cc$NAZARD=Nazard
-    label_cc$TIERCE=Tierce
-    label_cc$FOURNITURE=Fourniture
-    label_cc$CORNET=Cornet
+    label_cc$PLEINJEUX=Plein jeux 4R
+    label_cc$SESQUIALTERA=Sesquialtera 2R
     label_cc$TROMPETTE8=Trompette 8
 
     set_hdcc$BOURDON16=0.0
-    set_hdcc$BOURDON8=1.0
+    set_hdcc$FLUTE8=1.0
     set_hdcc$MONTRE8=0.0
-    set_hdcc$SALICIONAL8=0.0
-    set_hdcc$OCTAVE4=0.0
     set_hdcc$FLUTE4=0.0
+    set_hdcc$PRESTANT4=0.0
     set_hdcc$DOUBLETTE2=0.0
-    set_hdcc$NAZARD=0.0
-    set_hdcc$TIERCE=0.0
-    set_hdcc$FOURNITURE=0.0
-    set_hdcc$CORNET=0.0
+    set_hdcc$PLEINJEUX=0.0
+    set_hdcc$SESQUIALTERA=0.0
     set_hdcc$TROMPETTE8=0.0
 
-<global> ampeg_release=0.1
+<global> oscillator=on ampeg_attack=0.02 ampeg_release=0.1 oscillator_quality=1 amp_veltrack=0 volume=-9
 
-<group> amplitude_cc$BOURDON16=100 transpose=-12
-<region> ampeg_attack=0.3 oscillator=on sample=bourdon16_2.wav
+<master> transpose=-12 amplitude_cc$BOURDON16=100
+#include "bourdon16.sfz"
 
-<group> amplitude_cc$BOURDON8=100 transpose=-12
-<region> ampeg_attack=0.3 oscillator=on sample=bourdon8.wav
+<master> amplitude_cc$MONTRE8=100
+#include "montre8.sfz"
 
-<group> amplitude_cc$MONTRE8=100
-<region> ampeg_attack=0.02 oscillator=on sample=montre8.wav
+<master> amplitude_cc$FLUTE8=100
+#include "flute8.sfz"
 
-<group> amplitude_cc$SALICIONAL8=100
-<region> ampeg_attack=0.02 oscillator=on sample=salicional8.wav
+<master> transpose=12 amplitude_cc$FLUTE4=100
+#include "flutefuseau4.sfz"
 
-<group> amplitude_cc$OCTAVE4=100 transpose=12
-<region> loop_mode=one_shot ampeg_attack=0.02 oscillator=on sample=octave4_attack.wav
-<region> ampeg_delay=0.02 ampeg_attack=0.05 oscillator=on sample=octave4.wav
+<master> transpose=12 amplitude_cc$PRESTANT4=100
+#include "prestant4.sfz"
 
-<group> amplitude_cc$FLUTE4=100 transpose=-12
-<region> ampeg_attack=0.02 oscillator=on sample=flute4.wav
+<master> transpose=24 amplitude_cc$DOUBLETTE2=100
+#include "doublette2.sfz"
 
-<group> amplitude_cc$DOUBLETTE2=100
-<region> ampeg_attack=0.02 oscillator=on sample=doublette2.wav
+<master> transpose=12 amplitude_cc$PLEINJEUX=100
+#include "pleinjeux4R.sfz"
 
-<group> amplitude_cc$NAZARD=100
-<region> ampeg_attack=0.02 oscillator=on sample=nazard.wav
+<master> amplitude_cc$SESQUIALTERA=100
+#include "sesquialtera2R.sfz"
 
-<group> amplitude_cc$TIERCE=100 transpose=12
-<region> ampeg_attack=0.02 oscillator=on sample=tierce.wav
+<master> amplitude_cc$TROMPETTE8=100
+#include "trompette8.sfz"
 
-<group> amplitude_cc$FOURNITURE=100
-<region> ampeg_attack=0.02 oscillator=on sample=fourniture.wav
+// <effect>
+// bus=main
+// type=filter
+// filter_type=lpf_1p
+// filter_cutoff=10000
 
-<group> amplitude_cc$CORNET=100
-<region> ampeg_attack=0.02 oscillator=on sample=cornet.wav
+<effect>
+bus=main
+type=fverb
+reverb_dry=100
+reverb_wet=100
+reverb_size=50
+reverb_type=large_hall
+reverb_input=100
+reverb_tone=100
+reverb_damp=0
+reverb_predelay=0.1
 
-<group> amplitude_cc$TROMPETTE8=100
-<region> loop_mode=one_shot ampeg_attack=0.02 oscillator=on sample=trompette8_attack.wav
-<region> ampeg_delay=0.02 ampeg_attack=0.05 oscillator=on sample=trompette8.wav

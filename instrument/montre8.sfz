@@ -1,0 +1,97 @@
+<group> sample=table_montre8_c2_sustain.wav 
+        xfout_lokey=G2 xfout_hikey=C3 
+        ampeg_sustain=83
+    <region> key=C2  ampeg_attack=0.25  ampeg_decay=0.75
+    <region> key=C#2 ampeg_attack=0.24  ampeg_decay=0.72
+    <region> key=D2  ampeg_attack=0.23  ampeg_decay=0.69
+    <region> key=D#2 ampeg_attack=0.23  ampeg_decay=0.69
+    <region> key=E2  ampeg_attack=0.22  ampeg_decay=0.66
+    <region> key=F2  ampeg_attack=0.21  ampeg_decay=0.63
+    <region> key=F#2 ampeg_attack=0.20  ampeg_decay=0.60
+    <region> key=G2  ampeg_attack=0.19  ampeg_decay=0.57
+    <region> key=G#2 ampeg_attack=0.18  ampeg_decay=0.54
+    <region> key=A2  ampeg_attack=0.18  ampeg_decay=0.54
+    <region> key=A#2 ampeg_attack=0.17  ampeg_decay=0.51
+    <region> key=B2  ampeg_attack=0.16  ampeg_decay=0.48
+<group> sample=table_montre8_c3_sustain.wav 
+        xfin_lokey=G2 xfin_hikey=C3 
+        xfout_lokey=G3 xfout_hikey=B3 
+        ampeg_sustain=83
+    <region> key=G2  ampeg_attack=0.19  ampeg_decay=0.57
+    <region> key=G#2 ampeg_attack=0.18  ampeg_decay=0.54
+    <region> key=A2  ampeg_attack=0.18  ampeg_decay=0.54
+    <region> key=A#2 ampeg_attack=0.17  ampeg_decay=0.51
+    <region> key=B2  ampeg_attack=0.16  ampeg_decay=0.48
+    <region> key=C3  ampeg_attack=0.15  ampeg_decay=0.45
+    <region> key=C#3 ampeg_attack=0.14  ampeg_decay=0.42
+    <region> key=D3  ampeg_attack=0.13  ampeg_decay=0.39
+    <region> key=D#3 ampeg_attack=0.13  ampeg_decay=0.39
+    <region> key=E3  ampeg_attack=0.12  ampeg_decay=0.36
+    <region> key=F3  ampeg_attack=0.11  ampeg_decay=0.33
+    <region> key=F#3 ampeg_attack=0.10  ampeg_decay=0.30
+    <region> key=G3  ampeg_attack=0.09  ampeg_decay=0.27
+    <region> key=G#3 ampeg_attack=0.08  ampeg_decay=0.24
+    <region> key=A3  ampeg_attack=0.08  ampeg_decay=0.24
+    <region> key=A#3 ampeg_attack=0.07  ampeg_decay=0.21
+    <region> key=B3  ampeg_attack=0.06  ampeg_decay=0.18
+<group> sample=table_montre8_c4_sustain.wav 
+        xfin_lokey=G3 xfin_hikey=C4 
+        xfout_lokey=G4 xfout_hikey=B4
+        ampeg_sustain=78
+    <region> key=G3  ampeg_attack=0.09  ampeg_decay=0.27
+    <region> key=G#3 ampeg_attack=0.08  ampeg_decay=0.24
+    <region> key=A3  ampeg_attack=0.08  ampeg_decay=0.24
+    <region> key=A#3 ampeg_attack=0.07  ampeg_decay=0.21
+    <region> key=B3  ampeg_attack=0.06  ampeg_decay=0.18
+    <region> key=C4  ampeg_attack=0.05
+    <region> key=C#4 ampeg_attack=0.05
+    <region> key=D4  ampeg_attack=0.05
+    <region> key=D#4 ampeg_attack=0.05
+    <region> key=E4  ampeg_attack=0.05
+    <region> key=F4  ampeg_attack=0.05
+    <region> key=F#4 ampeg_attack=0.05
+    <region> key=G4  ampeg_attack=0.05
+    <region> key=G#4 ampeg_attack=0.05
+    <region> key=A4  ampeg_attack=0.05
+    <region> key=A#4 ampeg_attack=0.05
+    <region> key=B4  ampeg_attack=0.05
+<group> sample=table_montre8_c5_sustain.wav 
+        xfin_lokey=G4 xfin_hikey=C5
+        xfout_lokey=G5 xfout_hikey=B5
+    <region> key=G4  ampeg_attack=0.05
+    <region> key=G#4 ampeg_attack=0.05
+    <region> key=A4  ampeg_attack=0.05
+    <region> key=A#4 ampeg_attack=0.05
+    <region> key=B4  ampeg_attack=0.05
+    <region> key=C5  ampeg_attack=0.05
+    <region> key=C#5 ampeg_attack=0.05
+    <region> key=D5  ampeg_attack=0.05
+    <region> key=D#5 ampeg_attack=0.05
+    <region> key=E5  ampeg_attack=0.05
+    <region> key=F5  ampeg_attack=0.05
+    <region> key=F#5 ampeg_attack=0.05
+    <region> key=G5  ampeg_attack=0.05
+    <region> key=G#5 ampeg_attack=0.05
+    <region> key=A5  ampeg_attack=0.05
+    <region> key=A#5 ampeg_attack=0.05
+    <region> key=B5  ampeg_attack=0.05
+<group> sample=table_montre8_c6_sustain.wav 
+        xfin_lokey=G5 xfin_hikey=C6
+    <region> key=G5  ampeg_attack=0.05
+    <region> key=G#5 ampeg_attack=0.05
+    <region> key=A5  ampeg_attack=0.05
+    <region> key=A#5 ampeg_attack=0.05
+    <region> key=B5  ampeg_attack=0.05
+    <region> key=C6  ampeg_attack=0.05
+    <region> key=C#6 ampeg_attack=0.05
+    <region> key=D6  ampeg_attack=0.05
+    <region> key=D#6 ampeg_attack=0.05
+    <region> key=E6  ampeg_attack=0.05
+    <region> key=F6  ampeg_attack=0.05
+    <region> key=F#6 ampeg_attack=0.05
+    <region> key=G6  ampeg_attack=0.05
+    <region> key=G#6 ampeg_attack=0.05
+    <region> key=A6  ampeg_attack=0.05
+    <region> key=A#6 ampeg_attack=0.05
+    <region> key=B6  ampeg_attack=0.05
+    <region> key=C7  ampeg_attack=0.05

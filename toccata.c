@@ -60,18 +60,15 @@
 #define NUM_VOICES 256
 #define UNUSED(x) (void)(x)
 
-#define TOCCATA_BOURDON16_CC 200
-#define TOCCATA_BOURDON8_CC 201
-#define TOCCATA_MONTRE8_CC 202
-#define TOCCATA_SALICIONAL8_CC 203
-#define TOCCATA_OCTAVE4_CC 204
-#define TOCCATA_FLUTE4_CC 205
-#define TOCCATA_DOUBLETTE2_CC 206
-#define TOCCATA_NAZARD_CC 207
-#define TOCCATA_TIERCE_CC 208
-#define TOCCATA_FOURNITURE_CC 209
-#define TOCCATA_CORNET_CC 210
-#define TOCCATA_TROMPETTE8_CC 211
+#define TOCCATA_BOURDON16_CC 100
+#define TOCCATA_FLUTE8_CC 101
+#define TOCCATA_MONTRE8_CC 102
+#define TOCCATA_FLUTE4_CC 103
+#define TOCCATA_PRESTANT4_CC 104
+#define TOCCATA_DOUBLETTE2_CC 105
+#define TOCCATA_PLEINJEUX_CC 106
+#define TOCCATA_SESQUIALTERA_CC 107
+#define TOCCATA_TROMPETTE8_CC 108
 
 enum {
     INPUT_PORT = 0,
@@ -79,16 +76,13 @@ enum {
     RIGHT_BUFFER,
     FREEWHEEL_PORT,
     BOURDON16_PORT,
-    BOURDON8_PORT,
+    FLUTE8_PORT,
     MONTRE8_PORT,
-    SALICIONAL8_PORT,
-    OCTAVE4_PORT,
     FLUTE4_PORT,
+    PRESTANT4_PORT,
     DOUBLETTE2_PORT,
-    NAZARD_PORT,
-    TIERCE_PORT,
-    FOURNITURE_PORT,
-    CORNET_PORT,
+    PLEINJEUX_PORT,
+    SESQUIALTERA_PORT,
     TROMPETTE8_PORT
 };
 
@@ -104,29 +98,23 @@ typedef struct
     float *output_buffers[2];
     const float *freewheel_port;
     const float *bourdon16_port;
-    const float *bourdon8_port;
+    const float *flute8_port;
     const float *montre8_port;
-    const float *salicional8_port;
-    const float *octave4_port;
     const float *flute4_port;
+    const float *prestant4_port;
     const float *doublette2_port;
-    const float *nazard_port;
-    const float *tierce_port;
-    const float *fourniture_port;
-    const float *cornet_port;
+    const float *pleinjeux_port;
+    const float *sesquialtera_port;
     const float *trompette8_port;
 
     float bourdon16_gain;
-    float bourdon8_gain;
+    float flute8_gain;
     float montre8_gain;
-    float salicional8_gain;
-    float octave4_gain;
     float flute4_gain;
+    float prestant4_gain;
     float doublette2_gain;
-    float nazard_gain;
-    float tierce_gain;
-    float fourniture_gain;
-    float cornet_gain;
+    float pleinjeux_gain;
+    float sesquialtera_gain;
     float trompette8_gain;
 
     // Atom forge
@@ -200,17 +188,14 @@ connect_port(LV2_Handle instance,
     case BOURDON16_PORT:
         self->bourdon16_port = (const float*)data;
         break;
-    case BOURDON8_PORT:
-        self->bourdon8_port = (const float*)data;
+    case FLUTE8_PORT:
+        self->flute8_port = (const float*)data;
         break;
     case MONTRE8_PORT:
         self->montre8_port = (const float*)data;
         break;
-    case SALICIONAL8_PORT:
-        self->salicional8_port = (const float*)data;
-        break;
-    case OCTAVE4_PORT:
-        self->octave4_port = (const float*)data;
+    case PRESTANT4_PORT:
+        self->prestant4_port = (const float*)data;
         break;
     case FLUTE4_PORT:
         self->flute4_port = (const float*)data;
@@ -218,17 +203,11 @@ connect_port(LV2_Handle instance,
     case DOUBLETTE2_PORT:
         self->doublette2_port = (const float*)data;
         break;
-    case NAZARD_PORT:
-        self->nazard_port = (const float*)data;
+    case PLEINJEUX_PORT:
+        self->pleinjeux_port = (const float*)data;
         break;
-    case TIERCE_PORT:
-        self->tierce_port = (const float*)data;
-        break;
-    case FOURNITURE_PORT:
-        self->fourniture_port = (const float*)data;
-        break;
-    case CORNET_PORT:
-        self->cornet_port = (const float*)data;
+    case SESQUIALTERA_PORT:
+        self->sesquialtera_port = (const float*)data;
         break;
     case TROMPETTE8_PORT:
         self->trompette8_port = (const float*)data;
@@ -261,16 +240,13 @@ instantiate(const LV2_Descriptor* descriptor,
     self->sample_rate = rate;
     self->activated = false;
     self->bourdon16_gain = 0.0f;
-    self->bourdon8_gain = 0.0f;
+    self->flute8_gain = 0.0f;
     self->montre8_gain = 0.0f;
-    self->salicional8_gain = 0.0f;
-    self->octave4_gain = 0.0f;
     self->flute4_gain = 0.0f;
+    self->prestant4_gain = 0.0f;
     self->doublette2_gain = 0.0f;
-    self->nazard_gain = 0.0f;
-    self->tierce_gain = 0.0f;
-    self->fourniture_gain = 0.0f;
-    self->cornet_gain = 0.0f;
+    self->pleinjeux_gain = 0.0f;
+    self->sesquialtera_gain = 0.0f;
     self->trompette8_gain = 0.0f;
 
     // Get the features from the host and populate the structure
@@ -468,16 +444,13 @@ run(LV2_Handle instance, uint32_t sample_count)
     }
 
     send_cc_if_necessary(self, self->bourdon16_port, &self->bourdon16_gain, TOCCATA_BOURDON16_CC);
-    send_cc_if_necessary(self, self->bourdon8_port, &self->bourdon8_gain, TOCCATA_BOURDON8_CC);
+    send_cc_if_necessary(self, self->flute8_port, &self->flute8_gain, TOCCATA_FLUTE8_CC);
     send_cc_if_necessary(self, self->montre8_port, &self->montre8_gain, TOCCATA_MONTRE8_CC);
-    send_cc_if_necessary(self, self->salicional8_port, &self->salicional8_gain, TOCCATA_SALICIONAL8_CC);
-    send_cc_if_necessary(self, self->octave4_port, &self->octave4_gain, TOCCATA_OCTAVE4_CC);
     send_cc_if_necessary(self, self->flute4_port, &self->flute4_gain, TOCCATA_FLUTE4_CC);
+    send_cc_if_necessary(self, self->prestant4_port, &self->prestant4_gain, TOCCATA_PRESTANT4_CC);
     send_cc_if_necessary(self, self->doublette2_port, &self->doublette2_gain, TOCCATA_DOUBLETTE2_CC);
-    send_cc_if_necessary(self, self->nazard_port, &self->nazard_gain, TOCCATA_NAZARD_CC);
-    send_cc_if_necessary(self, self->tierce_port, &self->tierce_gain, TOCCATA_TIERCE_CC);
-    send_cc_if_necessary(self, self->fourniture_port, &self->fourniture_gain, TOCCATA_FOURNITURE_CC);
-    send_cc_if_necessary(self, self->cornet_port, &self->cornet_gain, TOCCATA_CORNET_CC);
+    send_cc_if_necessary(self, self->pleinjeux_port, &self->pleinjeux_gain, TOCCATA_PLEINJEUX_CC);
+    send_cc_if_necessary(self, self->sesquialtera_port, &self->sesquialtera_gain, TOCCATA_SESQUIALTERA_CC);
     send_cc_if_necessary(self, self->trompette8_port, &self->trompette8_gain, TOCCATA_TROMPETTE8_CC);
 
     check_freewheeling(self);

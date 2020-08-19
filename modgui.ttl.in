@@ -20,46 +20,34 @@
             lv2:name "Bourdon 16" ;
         ] , [
             lv2:index 1 ;
-            lv2:symbol "bourdon8" ;
-            lv2:name "Bourdon 8" ;
+            lv2:symbol "flute8" ;
+            lv2:name "Flute 8" ;
         ] , [
             lv2:index 2 ;
             lv2:symbol "montre8" ;
             lv2:name "Montre 8" ;
         ] , [
             lv2:index 3 ;
-            lv2:symbol "salicional8" ;
-            lv2:name "Salic. 8" ;
-        ] , [
-            lv2:index 4 ;
-            lv2:symbol "octave4" ;
-            lv2:name "Octave 4" ;
-        ] , [
-            lv2:index 5 ;
             lv2:symbol "flute4" ;
             lv2:name "Flute 4" ;
         ] , [
-            lv2:index 6 ;
+            lv2:index 4 ;
+            lv2:symbol "prestant4" ;
+            lv2:name "Prestant 4" ;
+        ] , [
+            lv2:index 5 ;
             lv2:symbol "doublette2" ;
             lv2:name "Doubl. 2" ;
         ] , [
+            lv2:index 6 ;
+            lv2:symbol "pleinjeux" ;
+            lv2:name "Plein jeux" ;
+        ] , [
             lv2:index 7 ;
-            lv2:symbol "nazard" ;
-            lv2:name "Nazard" ;
-        ]  , [
+            lv2:symbol "sesquialtera" ;
+            lv2:name "Sesquialtera" ;
+        ] , [
             lv2:index 8 ;
-            lv2:symbol "tierce" ;
-            lv2:name "Tierce" ;
-        ]  , [
-            lv2:index 9 ;
-            lv2:symbol "fourniture" ;
-            lv2:name "Fourn." ;
-        ]  , [
-            lv2:index 10 ;
-            lv2:symbol "cornet" ;
-            lv2:name "Cornet" ;
-        ]  , [
-            lv2:index 11 ;
             lv2:symbol "trompette8" ;
             lv2:name "Tromp. 8" ;
         ] ;
